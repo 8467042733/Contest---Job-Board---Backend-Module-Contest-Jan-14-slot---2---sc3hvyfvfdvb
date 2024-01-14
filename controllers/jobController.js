@@ -40,7 +40,7 @@ exports.updateJob = async (req, res) => {
     // TODO: Extract the job ID from the request parameters and new details from the request body
     const jobId = req.params.jobId;
     const newDetails = req.body.newDetails;
-    res.json({message:'Job updated successfully',updateJob});
+    res.json({ message: 'Job updated successfully', job });
     // TODO: Update the job details and send a JSON response with the updated job
 
     // TODO: If the job is not found, send a 404 response

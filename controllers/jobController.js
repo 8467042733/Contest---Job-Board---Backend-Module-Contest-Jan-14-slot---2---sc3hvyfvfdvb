@@ -38,7 +38,11 @@ exports.getJobDetails = async (req, res) => {
 exports.updateJob = async (req, res) => {
   try {
     // TODO: Extract the job ID from the request parameters and new details from the request body
+    const jobId = req.params.jobId;
+    const newDetails = req.body.newDetails;
+    res.json({message:'Job updated successfully',updateJob});
     // TODO: Update the job details and send a JSON response with the updated job
+
     // TODO: If the job is not found, send a 404 response
     // res.json({ message: 'Job updated successfully', job });
   } catch (error) {
@@ -49,6 +53,9 @@ exports.updateJob = async (req, res) => {
 
 exports.deleteJob = async (req, res) => {
   try {
+    const jobId = req.params.jobId;
+   
+    res.json({message:'Job deleted successfully'});
     // TODO: Extract the job ID from the request parameters and delete the job
     // TODO: If the job is not found, send a 404 response
     // TODO: Send a success response for the deleted job
@@ -61,6 +68,16 @@ exports.deleteJob = async (req, res) => {
 
 exports.searchJobs = async (req, res) => {
   try {
+    const searchCriteria = req.query.criteria;
+    const regexPattern = new RegExp(searchCriteria,'i');
+    const matchingJobs = await Job.find({
+      $or: [
+        {title:regexPattern},
+        {description:regexPattern},
+        {company:regexPattern},
+      ],
+    });
+    res.json({message:'Search jobs by criteria',jobs:matchingJobs});
     // TODO: Extract the search criteria from the request query
     // TODO: Create a regex pattern for the search criteria
     // TODO: Search jobs based on the regex pattern for title, description, or company
